@@ -9,10 +9,11 @@
 #include "opencv2/flann.hpp"
 #include "opencv2/xfeatures2d/nonfree.hpp"
 #include "FileAgent.h"
+#include "opencv2/features2d.hpp"
 
 class VocabularyCreator {
 public:
-    void create(const char *dirName, const char *pathToResultVocabulary);
+    void create(const char *dirName, const char *pathToResultVocabulary, int dictionarySize);
 };
 
 

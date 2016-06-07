@@ -32,3 +32,8 @@
 
 # Cmake
 CMakeLists.txt
+
+#IDEA
+.idea/
+
+.gitignore

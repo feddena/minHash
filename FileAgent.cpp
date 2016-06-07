@@ -13,15 +13,15 @@ bool isNormalName(struct dirent *ent) {
 vector<string> FileAgent::getNameOfFilesInDir(const char* dirName) {
     DIR *dir1;
     struct dirent *ent;
-    vector<string> fileName;
+    vector<string> fileNames;
     if ((dir1 = opendir(dirName)) != NULL) {
         while ((ent = readdir(dir1)) != NULL) {
             if (isNormalName(ent)) {
-                fileName.push_back(string(dirName) + "/" + ent->d_name);
+                fileNames.push_back(string(dirName) + "/" + ent->d_name);
             }
         }
     }
 
-    return fileName;
+    return fileNames;
 }
 

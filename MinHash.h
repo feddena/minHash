@@ -15,9 +15,17 @@
 using namespace std;
 
 class MinHash {
+public:
+
+    MinHash(int numHashFunctions, unsigned long numWordsInDictionary);
+
+    /**
+     * @return words witch relates to min value according to each hash function
+     */
+    vector<int> chooseWords(vector<int> &words);
 
 private:
-    vector <vector <int> > hashTables;
+    vector <vector <double> > hashTables;
 
     void generateTables(int numHashFunctions, unsigned long numWordsInDictionary);
 
@@ -25,10 +33,7 @@ private:
     * applies min hash function to set of words
     * @return word from set of given words witch relates to minimal value in hash table
     */
-    int applyHashFunction(vector<int> weights, vector <int> words);
-public:
-
-    vector<int> getWordsWithMinHashes(vector<int> &words, int numOfHashFunction);
+    int applyHashFunction(vector<double> hashFunction, vector <int> words);
 };
 
 

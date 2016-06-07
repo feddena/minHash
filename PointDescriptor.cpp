@@ -13,12 +13,12 @@ PointDescriptor::PointDescriptor(const char* path2Vocabulary) {
     bowDE.setVocabulary(dictionary);
 }
 
-Mat PointDescriptor::getDescription(Mat img) {
+vector<int> PointDescriptor::getDescription(Mat img) {
 
     //To store the keypoints that will be extracted by SIFT
     std::vector<KeyPoint> keypoints;
     //Detect SIFT keypoints (or feature points)
-    descriptorExtractor-> detect(img, keypoints);
+    pointDetector-> detect(img, keypoints);
     //To store the BoW (or BoF) representation of the image
     Mat bowDescriptor;
     std::vector<std::vector<int> >* pointIdxsOfClusters = new vector<vector<int>>();
@@ -28,16 +28,22 @@ Mat PointDescriptor::getDescription(Mat img) {
     //extract BoW (or BoF) descriptor from given image
     bowDE.compute(img, keypoints,bowDescriptor, pointIdxsOfClusters);
 
-    int threshold = 30;
+    Mat imgKeypoints;// = Mat::zeros(img.size(), img.type());
+    //img.copyTo(imgKeypoints);
+
+    drawKeypoints( img, keypoints, imgKeypoints, Scalar::all(-1), DrawMatchesFlags::DEFAULT );
+    //-- Show detected (drawn) keypoints
+    imshow("Keypoints", imgKeypoints );
+    waitKey(0);
+
+    int threshold = 0;
     std::vector<int> imageClusters;
     for(int i = 0; i < dictionary.rows; ++i) {
         if(pointIdxsOfClusters->at(i).size() > threshold) {
-            cout << i << " " ; //" cluster : " << i << " numKeyPoints : " << pointIdxsOfClusters->at(i).size() << endl;
-            //imageClusters.push_back(i);
+            //cout << i << " " << "cluster : " << i << " numKeyPoints : " << pointIdxsOfClusters->at(i).size() << endl;
+            imageClusters.push_back(i);
         }
     }
 
-    cout << endl;
-
-    return bowDescriptor;
+    return imageClusters;
 }

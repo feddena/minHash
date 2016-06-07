@@ -5,10 +5,11 @@
 #include "VocabularyCreator.h"
 using namespace cv;
 using namespace std;
-void VocabularyCreator::create(const char *dirName, const char *pathToResultVocabulary) {
+void VocabularyCreator::create(const char *dirName, const char *pathToResultVocabulary, int dictionarySize) {
     Mat input;
     Mat descriptor;
-    vector<KeyPoint> keypoints;
+    vector<KeyPoint> keyPoints;
+    Ptr<DescriptorExtractor> pointDetector = cv::FastFeatureDetector::create(10, true, 0);
     Ptr<DescriptorExtractor> descriptorExtractor = xfeatures2d::SIFT::create();
     Mat featuresNotClustered = Mat::zeros(1, descriptorExtractor->descriptorSize(), descriptorExtractor->descriptorType());
     FileAgent fileAgent;
@@ -21,14 +22,14 @@ void VocabularyCreator::create(const char *dirName, const char *pathToResultVoca
             continue;
         }
 
-        descriptorExtractor -> detect(input, keypoints);
-        descriptorExtractor -> compute(input, keypoints, descriptor);
+        pointDetector -> detect(input, keyPoints);
+        //pointDetector -> detect(input, keyPoints);
+        descriptorExtractor -> compute(input, keyPoints, descriptor);
         featuresNotClustered.push_back(descriptor);
         ++processed;
         printf("%f percent done\n", processed * 100 / filesInDir.size());
     }
 
-    int dictionarySize = 50;
     TermCriteria tc(CV_TERMCRIT_ITER, 100, 0.001);
     int retries = 1;
     int flags = KMEANS_PP_CENTERS;
