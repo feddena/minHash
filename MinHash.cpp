@@ -13,7 +13,7 @@ void MinHash::generateTables(int numHashFunctions, unsigned long numWordsInDicti
     srand (time(NULL));
 
     for(int i = 0; i < numHashFunctions; ++i) {
-        hashTables.push_back(vector<double>(numWordsInDictionary));
+        hashTables.push_back(vector<int>(numWordsInDictionary));
         for(unsigned long j = 0; j < numWordsInDictionary; ++j) {
             hashTables[i][j] = rand();
         }
@@ -21,6 +21,10 @@ void MinHash::generateTables(int numHashFunctions, unsigned long numWordsInDicti
 }
 
 vector<int> MinHash::chooseWords(vector<int> &words) {
+    if(words.empty()) {
+        return words;
+    }
+
     vector<int> chosenWords;
     for(int i = 0; i < hashTables.size(); ++i) {
         int chosenIdx = applyHashFunction(hashTables[i], words);
@@ -29,7 +33,7 @@ vector<int> MinHash::chooseWords(vector<int> &words) {
     return chosenWords;
 }
 
-int MinHash::applyHashFunction(vector<double> hashFunction, vector<int> words) {
+int MinHash::applyHashFunction(vector<int> hashFunction, vector<int> words) {
     int minVal = MAXINT, minIdx = 0;
     for(int i = 0; i < words.size(); ++i) {
         int numberRelatedToWord = hashFunction[words[i]];

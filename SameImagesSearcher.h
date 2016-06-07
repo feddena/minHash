@@ -5,13 +5,15 @@
 #ifndef MINHASH_SAMEIMAGESSEARCHER_H
 #define MINHASH_SAMEIMAGESSEARCHER_H
 
+#include "map"
 
 class SameImagesSearcher {
 private:
-    const char* resultVocabularyName = "dictionary.yml";
-    const int sizeOfDictionary = 100;
+    const char *vocabularyName = "dictionary.yml";
 public:
-    void searchSameImages(const char *dirName);
+    SameImagesSearcher(const char *vocabularyName);
+    void searchSameImages(const char *dirName, double threshold, unsigned long numWordsInVocabulary,
+                                              int numHashFunctions);
 };
 
 

@@ -25,7 +25,7 @@ public:
     vector<int> chooseWords(vector<int> &words);
 
 private:
-    vector <vector <double> > hashTables;
+    vector <vector <int> > hashTables;
 
     void generateTables(int numHashFunctions, unsigned long numWordsInDictionary);
 
@@ -33,7 +33,7 @@ private:
     * applies min hash function to set of words
     * @return word from set of given words witch relates to minimal value in hash table
     */
-    int applyHashFunction(vector<double> hashFunction, vector <int> words);
+    int applyHashFunction(vector<int> hashFunction, vector <int> words);
 };
 
 

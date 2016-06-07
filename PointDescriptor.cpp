@@ -28,13 +28,13 @@ vector<int> PointDescriptor::getDescription(Mat img) {
     //extract BoW (or BoF) descriptor from given image
     bowDE.compute(img, keypoints,bowDescriptor, pointIdxsOfClusters);
 
-    Mat imgKeypoints;// = Mat::zeros(img.size(), img.type());
-    //img.copyTo(imgKeypoints);
-
-    drawKeypoints( img, keypoints, imgKeypoints, Scalar::all(-1), DrawMatchesFlags::DEFAULT );
-    //-- Show detected (drawn) keypoints
-    imshow("Keypoints", imgKeypoints );
-    waitKey(0);
+//    Mat imgKeypoints;// = Mat::zeros(img.size(), img.type());
+//    //img.copyTo(imgKeypoints);
+//
+//    drawKeypoints( img, keypoints, imgKeypoints, Scalar::all(-1), DrawMatchesFlags::DEFAULT );
+//    //-- Show detected (drawn) keypoints
+//    imshow("Keypoints", imgKeypoints );
+//    waitKey(0);
 
     int threshold = 0;
     std::vector<int> imageClusters;
