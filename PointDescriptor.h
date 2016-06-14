@@ -17,13 +17,13 @@ class PointDescriptor {
 private:
     Mat dictionary;
     Ptr<DescriptorMatcher> matcher = new FlannBasedMatcher;
-    Ptr<DescriptorExtractor> pointDetector = cv::FastFeatureDetector::create(20, true, 0);
+    Ptr<DescriptorExtractor> pointDetector = cv::FastFeatureDetector::create(10, true, 0);
     Ptr<DescriptorExtractor> descriptorExtractor = xfeatures2d::SIFT::create();
     BOWImgDescriptorExtractor bowDE = BOWImgDescriptorExtractor(descriptorExtractor,matcher);
 
 public:
     PointDescriptor(const char* path2Vocabulary);
-    vector<int> getDescription(Mat image);
+    vector<int> getDescription(Mat image, Mat zoneOfInterest);
 };
 
 

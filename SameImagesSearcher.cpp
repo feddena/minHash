@@ -9,6 +9,8 @@
 #include "PointDescriptor.h"
 #include "ImageInfo.h"
 #include "ImageComparator.h"
+#include "ZoneOfInterestChooser.h"
+#include "ImageInfoProducer.h"
 
 using namespace cv;
 
@@ -19,13 +21,12 @@ void SameImagesSearcher::searchSameImages(const char *dirName, double threshold,
     PointDescriptor pointDescriptor(vocabularyName);
     vector<ImageInfo> imagesInfo;
     MinHash minHash(numHashFunctions,numWordsInVocabulary);
+    ImageInfoProducer imageInfoProducer(&minHash, &pointDescriptor);
     cout << "search keypints, calculate descriptors, classificate points to get visual words and choose words using minHash" << endl;
-
+    int prev = 0;
     for(int i = 0; i < imageNames.size(); ++i) {
-        Mat img = imread(imageNames[i], CV_LOAD_IMAGE_GRAYSCALE);
-        vector<int> words = pointDescriptor.getDescription(img);
-        vector<int> chosenWords = minHash.chooseWords(words);
-        imagesInfo.push_back(ImageInfo(imageNames[i], chosenWords));
+        ImageInfo imageInfo = imageInfoProducer.createSetOfVisualWordsDescription(imageNames[i]);
+        imagesInfo.push_back(imageInfo);
         if(i != 0) {
             cout << (double)i / (double)imageNames.size() * 100 << "% processed" << endl;
         }

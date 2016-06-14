@@ -2,7 +2,6 @@
 // Created by fedor on 03.06.16.
 //
 
-#include <assert.h>
 #include <iostream>
 #include <values.h>
 #include <unistd.h>

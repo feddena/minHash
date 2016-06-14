@@ -4,6 +4,7 @@
 #include "PointDescriptor.h"
 #include "MinHash.h"
 #include "SameImagesSearcher.h"
+#include "ImageAnalistic.h"
 
 using namespace std;
 using namespace cv;
@@ -14,29 +15,26 @@ void createVocabulary(const char *resultVocabularyName, int vocabularySize) {
     vocabularyCreator.create(dirName, resultVocabularyName, vocabularySize);
 }
 
+void searchSameImages(const char* resultVocabularyName, int sizeOfDictionary){
+    SameImagesSearcher sameImagesSearcher(resultVocabularyName);
+    sameImagesSearcher.searchSameImages("/home/fedor/Documents/photoWork/similar_presents/presents2/", 0.5, sizeOfDictionary, 20);
+
+}
 int main() {
-    const char* resultVocabularyName = "dictionary.yml";
+    const char* vocabularyName = "dictionary.yml";
+    const char* goodImagesDirTrain = "/home/fedor/Documents/photoWork/similar_presents/presents_good_base";
+    const char* badImagesDirTrain = "/home/fedor/Documents/photoWork/similar_presents/presents_bad_base";
+    const char* goodImagesDirTest = "/home/fedor/Documents/photoWork/similar_presents/presents_good_test";
+    const char* badImagesDirTest = "/home/fedor/Documents/photoWork/similar_presents/presents_bad_test";
     const int sizeOfDictionary = 1000;
-//    createVocabulary(vocabularyName, sizeOfDictionary);
+    const int numHashFunctions = 10;
 
-    SameImagesSearcher sameImagesSearcher(resultVocabularyName, sizeOfDictionary);
-    sameImagesSearcher.searchSameImages("/home/fedor/Documents/photoWork/presents2/", 0.4, sizeOfDictionary, 10);
 
-//    PointDescriptor pointDescriptor(vocabularyName);
-//    Mat img = imread("/home/fedor/Documents/photoWork/presents2/835364524796.png", CV_LOAD_IMAGE_GRAYSCALE);
-//
-//    if (img.empty()) {
-//        cout << "empty image";
-//        return 0;
-//    }
-//
-//    vector<int> words = pointDescriptor.getDescription(img);
-//
-//    MinHash minHash(10, sizeOfDictionary);
-//    vector<int> chosenWords = minHash.chooseWords(words);
-//
-//    for (int word : chosenWords) {
-//        cout << word << " ";
-//    }
+    ImageAnalistic imageAnalistic(sizeOfDictionary, numHashFunctions, vocabularyName, goodImagesDirTrain,
+                                  badImagesDirTrain);
+    cout << "GOOD : " << endl;
+    imageAnalistic.analiseImagesInDir(goodImagesDirTest, 100);
+    cout << "BAD : " << endl;
+    imageAnalistic.analiseImagesInDir(badImagesDirTest, 100);
 
 }

@@ -3,12 +3,12 @@
 //
 
 #include "ImageClusterization.h"
-
-void ImageClusterization::clusterizeImages(const char *dirName, double threshold, unsigned long numWordsInVocabulary,
-                                           int numHashFunctions) {
-
-}
-
-ImageClusterization::ImageClusterization(const char *vocabularyName) {
-    this.vocabularyName = vocabularyName;
-}
+//
+//void ImageClusterization::clusterizeImages(const char *dirName, double threshold, unsigned long numWordsInVocabulary,
+//                                           int numHashFunctions) {
+//
+//}
+//
+//ImageClusterization::ImageClusterization(const char *vocabularyName) {
+//    this.vocabularyName = v
+//}
